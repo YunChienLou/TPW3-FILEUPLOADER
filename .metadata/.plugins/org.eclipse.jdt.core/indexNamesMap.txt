@@ -1,3 +1,0 @@
-INDEX VERSION 1.131
-file:/C:/project/tpw3_fileupload/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
-meta_index
