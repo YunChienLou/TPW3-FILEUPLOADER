@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import redis.clients.jedis.Jedis;
+import tirc.tpw3.json.ServerSetting;
 
 @Service
 public class UploadService {
@@ -22,7 +23,8 @@ public class UploadService {
 //	private static String folder = "C:\\data\\TPW3_test_data\\[tpw1Test] 2020_11_12_15_38_00";
 	
 	private static String ACTION_QUEUE = "queue#action";
-
+	private ServerSetting serverSetting = new ServerSetting("tpw3_fileupload");
+	
 //	@Autowired
 //	private MinioService minioService;
 	// Ryan Lou
@@ -69,9 +71,11 @@ public class UploadService {
 					
 					CameraInfoForActionObj cameraInfo = fileModel.getActionObj().getCameraInfoForActionObj();
 					IdNameForActionObj idName = fileModel.getIdName();
+					
 					String filename = FilenameUtils.getName(rgbImagePath).replaceAll("[^0-9_]","");
 					// 只留下檔名的數字部分 (.jpg 去掉)
-					String task = "["+idName.getName()+"] "+filename;
+					
+					String task = fileModel.getTaskName();
 					String main_number = cameraInfo.getRecogType();
 					List<String> meter_number = cameraInfo.getMeasureMeters();
 					
@@ -79,11 +83,12 @@ public class UploadService {
 					String RGBImageBase64String = Base64.getEncoder().encodeToString(RGBImageContent);
 
 					Meter meterReq = new Meter(main_number, meter_number, task, RGBImageBase64String);
+					System.out.print(meterReq);
 					try {
-						String result = httpRequestService.metersPost("http://localhost:8080/meters", meterReq);
-						log.info("httpRequestService success :" + result);
+						Meter meter = httpRequestService.metersPost(serverSetting.getUploadUrl(), meterReq);
+						log.info("httpRequestService success , Task : " + meter.getTask() + " Id : " + meter.getId()) ;
 					} catch (Exception ex) {
-						log.info("httpRequestService fail :" + task);
+						log.error("httpRequestService fail " + " request body : "+ meterReq);
 //						pressEnterToContinue();
 					}
 
@@ -106,7 +111,7 @@ public class UploadService {
 			}
 
 		} catch (Exception ex) {
-			log.info("UploadService error: " + ex.getMessage());
+			log.error("UploadService error: " + ex.getMessage());
 		} finally {
 			if (null != jedis)
 				jedis.close();

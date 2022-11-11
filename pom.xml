@@ -38,14 +38,6 @@
 			<artifactId>jedis</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.minio/minio -->
-		<dependency>
-			<groupId>io.minio</groupId>
-			<artifactId>minio</artifactId>
-			<version>8.4.3</version>
-		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -58,6 +50,13 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

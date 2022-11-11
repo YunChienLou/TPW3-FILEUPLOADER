@@ -10,6 +10,15 @@ public class FileModel {
 
 	private IdNameForActionObj idName;
 	private ActionObj action;
+	private String taskName;
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
 
 	public ActionObj getActionObj() {
 		return action;
