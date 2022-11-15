@@ -1,4 +1,4 @@
-package tirc.tpw3.fileupload;
+package tirc.tpw3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
