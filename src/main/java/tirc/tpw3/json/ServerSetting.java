@@ -18,7 +18,7 @@ public class ServerSetting {
 	private transient File file;
 	
 	private int timeOut = 1500;
-	private String appName = "tpw3_fileupload";
+	private static String appName = "tpw3_fileupload";
 	private String uploadUrl = "http://localhost:8080/meters";
 	
 	public ServerSetting() {
