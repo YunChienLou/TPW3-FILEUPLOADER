@@ -33,20 +33,21 @@ public class UploadService {
 
 	@Autowired
 	private HttpRequestService httpRequestService;
-	
+
 	@PostConstruct
 	private void initJedis() {
 		jedis = new Jedis();
+
 	}
 
 	@Scheduled(fixedRate = 1000)
 	public void schedule() {
 		try {
-			
-			if(jedis == null) {
+
+			if (jedis == null) {
 				initJedis();
 			}
-			
+
 			long len = jedis.llen(ACTION_QUEUE);
 			// =========================================
 			// queue not empty
@@ -54,7 +55,7 @@ public class UploadService {
 			// 2. upload
 			// 3. if success, remove the last item
 			while (len > 0) {
-				log.info("目前剩餘資料數: {}", len);
+				log.info("current data amount: {}", len);
 				String sz = jedis.lindex(ACTION_QUEUE, -1); // 取得列表中最後一個action file
 
 				// Ryan Lou
@@ -88,12 +89,14 @@ public class UploadService {
 					String RGBImageBase64String = Base64.getEncoder().encodeToString(RGBImageContent);
 
 					Meter meterReq = new Meter(main_number, meter_number, task, RGBImageBase64String);
-					log.info("prepare to send request , this is Request Body : " + meterReq);
+					log.info("prepare to send request , this is RequestBody , Task Name: " + meterReq.getTask()
+							+ ", main_number : " + meterReq.getMain_number() + ", meter_number : "
+							+ meterReq.getMeter_number() + " , image length : " + meterReq.getImage().length());
 					try {
 						Meter meter = httpRequestService.metersPost(serverSetting.getUploadUrl(), meterReq);
 						log.info("httpRequestService success , Task : " + meter.getTask() + " Id : " + meter.getId());
 					} catch (Exception ex) {
-						log.error("httpRequestService fail " + " request body : " + meterReq);
+						log.error("httpRequestService fail ", ex);
 //						pressEnterToContinue();
 					}
 
@@ -117,13 +120,13 @@ public class UploadService {
 
 		} catch (Exception ex) {
 			log.error("UploadService error: " + ex.getMessage());
-		} 
+		}
 
 	}
-	
+
 	@PreDestroy
 	private void closeJedis() {
-		if(jedis != null) {
+		if (jedis != null) {
 			jedis.close();
 		}
 	}

@@ -1,16 +1,11 @@
 package com.example;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
-import tirc.tpw3.fileupload.Utils;
 
 class DemoApplicationTests {
 
@@ -20,6 +15,7 @@ class DemoApplicationTests {
 	private static String ACTION_QUEUE = "queue#action";
 
 	static Jedis jedis = null;
+	
 
 	@BeforeAll
 	static void init() {
@@ -32,23 +28,24 @@ class DemoApplicationTests {
 			jedis.close();
 		}
 	}
+	
 
-	@Test
-	void sendActions() throws IOException, InterruptedException {
-		File f = new File(folder);
-		File[] files = f.listFiles((dir, name) -> {
-			return name.startsWith("Action_");
-		});
-		// 找出所有 action files
-		int count = 0;
-		for (File file : files) {
-			String s = Utils.file2String(file);
-			jedis.lpush(ACTION_QUEUE, s);
-			// TimeUnit.SECONDS.sleep(10);
-			count += 1;
-		}
-		log.info("count: {}", count);
-	}
+//	@Test
+//	void sendActions() throws IOException, InterruptedException {
+//		File f = new File(folder);
+//		File[] files = f.listFiles((dir, name) -> {
+//			return name.startsWith("Action_");
+//		});
+//		// 找出所有 action files
+//		int count = 0;
+//		for (File file : files) {
+//			String s = Utils.file2String(file);
+//			jedis.lpush(ACTION_QUEUE, s);
+//			// TimeUnit.SECONDS.sleep(10);
+//			count += 1;
+//		}
+//		log.info("count: {}", count);
+//	}
 
 //	static String MINIO_URL =  "http://127.0.0.1:9000";
 //	static String MINIO_USER = "minioadmin";

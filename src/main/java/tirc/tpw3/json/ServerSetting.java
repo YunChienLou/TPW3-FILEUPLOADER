@@ -19,7 +19,7 @@ public class ServerSetting {
 	
 	private int timeOut = 1500;
 	private static String appName = "tpw3_fileupload";
-	private String uploadUrl = "http://localhost:8080/meters";
+	private String uploadUrl = "http://34.81.111.182:8080/meter/api/";
 	
 	public ServerSetting() {
 		String path = appName + File.separator + "setting.json";

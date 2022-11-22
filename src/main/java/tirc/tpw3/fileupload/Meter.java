@@ -2,11 +2,6 @@ package tirc.tpw3.fileupload;
 
 import java.util.List;
 
-
-
-import org.springframework.stereotype.Component;
-
-@Component
 public class Meter {
 	
 	private int id;
@@ -19,14 +14,24 @@ public class Meter {
 
 	private String image;
 	
+	private String error;
+	
 	public Meter() {}
 
 	public Meter(String main_number, List<String> meter_number, String task, String image) {
-		super();
 		this.main_number = main_number;
 		this.meter_number = meter_number;
 		this.task = task;
 		this.image = image;
+	}
+	
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public String getMain_number() {
@@ -72,7 +77,7 @@ public class Meter {
 	@Override
 	public String toString() {
 		return "Meter [id=" + id + ", main_number=" + main_number + ", meter_number=" + meter_number + ", task=" + task
-				+ ", image=" + image + "]";
+				+ ", image=" + image + ", error=" + error + "]";
 	}
 	
 }
