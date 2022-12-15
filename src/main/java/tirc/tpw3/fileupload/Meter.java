@@ -77,7 +77,7 @@ public class Meter {
 	@Override
 	public String toString() {
 		return "Meter [id=" + id + ", main_number=" + main_number + ", meter_number=" + meter_number + ", task=" + task
-				+ ", image=" + image + ", error=" + error + "]";
+				+ ", image length = " + image.length() + ", error=" + error + "]";
 	}
 	
 }
